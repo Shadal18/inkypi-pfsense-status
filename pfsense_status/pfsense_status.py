@@ -15,7 +15,7 @@ class PfSenseStatus(BasePlugin):
         if not api_key:
             raise RuntimeError(
                 "pfSense API key not configured. "
-                "Set PFSENSE_API_KEY in the InkyPi .env."
+                "Set PFSENSE_API_KEY in the InkyPi key settings."
             )
 
         headers = {"X-API-Key": api_key}
@@ -51,6 +51,20 @@ class PfSenseStatus(BasePlugin):
             raise RuntimeError(
                 f"Invalid JSON from pfSense API at {url}"
             ) from e
+
+    def _format_percent(self, value, clamp_100=False):
+        if not isinstance(value, (int, float)):
+            return "N/A"
+
+        value = round(float(value))
+
+        if value < 0:
+            value = 0
+
+        if clamp_100 and value > 100:
+            value = 100
+
+        return f"{int(value)}%"
 
     def _get_arp_clients(self, api_base, headers, auth, verify_ssl):
         url = f"{api_base}/api/v2/diagnostics/arp_table?limit=0&offset=0"
@@ -93,8 +107,8 @@ class PfSenseStatus(BasePlugin):
         cpu_raw = sys_data.get("cpu_usage")
         mem_raw = sys_data.get("mem_usage")
 
-        cpu = f"{cpu_raw}%" if isinstance(cpu_raw, (int, float)) else "N/A"
-        mem = f"{mem_raw}%" if isinstance(mem_raw, (int, float)) else "N/A"
+        cpu = self._format_percent(cpu_raw, clamp_100=True)
+        mem = self._format_percent(mem_raw, clamp_100=True)
 
         temp_c = sys_data.get("temp_c")
         temp_f = sys_data.get("temp_f")
@@ -168,13 +182,13 @@ class PfSenseStatus(BasePlugin):
 
         sorted_items = sorted(
             iface_counts.items(),
-            key=lambda kv: (0 if kv[0] == "LAN" else 1, kv[0]),
+            key=lambda kv: (0 if str(kv[0]).upper() == "LAN" else 1, str(kv[0])),
         )
 
         iface_items = []
         for name, count in sorted_items:
             if total_clients > 0:
-                pct = int((count / total_clients) * 100)
+                pct = int(round((count / total_clients) * 100))
             else:
                 pct = 0
             iface_items.append({"name": name, "count": count, "pct": pct})
