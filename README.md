@@ -16,7 +16,7 @@ It can show:
 Install the plugin from your InkyPi device:
 
 ```bash
-inkypi plugin install pfsense_status https://github.com/Shadal18/inkypi-pfsense-status
+inkypi plugin install pfsense_status https://github.com/shadal18/inkypi-pfsense-status
 ```
 
 ## Update
@@ -46,7 +46,7 @@ If you do not see changes after updating:
 
 ## pfSense API key setup
 
-This plugin requires a pfSense REST API key, and the key can be created from the pfSense web interface under **System > REST API > Keys** [1].
+This plugin requires a pfSense REST API key, and the key can be created from the pfSense web interface under **System > REST API > Keys** .
 
 To add the key in InkyPi:
 
@@ -69,4 +69,4 @@ The plugin settings page lets you customize:
 
 GitHub repository:
 
-[https://github.com/Shadal18/inkypi-pfsense-status](https://github.com/Shadal18/inkypi-pfsense-status)
+[https://github.com/shadal18/inkypi-pfsense-status](https://github.com/shadal18/inkypi-pfsense-status)
