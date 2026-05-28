@@ -23,9 +23,8 @@ To update the plugin on your InkyPi device:
    ```bash
    git pull origin main && \
    if [ -d pfsense_status ]; then \
-     shopt -s dotglob nullglob && \
-     mv pfsense_status/* . && \
-     rmdir pfsense_status; \
+     rsync -a pfsense_status/ ./ && \
+     rm -rf pfsense_status; \
    fi && \
    sudo systemctl restart inkypi.service
    ```
