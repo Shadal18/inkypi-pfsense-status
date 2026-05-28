@@ -1,0 +1,83 @@
+{% extends "plugin.html" %} {% block content %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>pfSense Status</title>
+  </head>
+  <body>
+    <div class="root">
+      <!-- Header row: title + WAN card -->
+      <div class="header-row">
+        <div class="title-block">
+          <div class="title">{{ title }}</div>
+          <div class="subtitle">Live snapshot from pfSense</div>
+        </div>
+
+        <div class="wan-card">
+          <div class="wan-label">WAN</div>
+          <div class="wan-status {% if wan_status == 'UP' %}ok{% else %}down{% endif %}">
+            {% if wan_status == 'UP' %}
+            <span class="wan-arrow wan-arrow-up">▲</span>
+            {% else %}
+            <span class="wan-arrow wan-arrow-down">▼</span>
+            {% endif %} {{ wan_status }}
+          </div>
+          <div class="wan-ip">{{ wan_ip }}</div>
+        </div>
+      </div>
+
+      <!-- Metrics row -->
+      <div class="metrics-row">
+        {% if plugin_settings.show_clients == "true" %}
+        <div class="metric-card metric-clients">
+          <div class="metric-label">CLIENTS</div>
+          <div class="metric-value">{{ total_clients }}</div>
+        </div>
+        {% endif %} {% if plugin_settings.show_uptime == "true" %}
+        <div class="metric-card metric-uptime">
+          <div class="metric-label">UPTIME</div>
+          <div class="metric-value smaller">{{ uptime }}</div>
+        </div>
+        {% endif %} {% if plugin_settings.show_cpu == "true" %}
+        <div class="metric-card metric-cpu">
+          <div class="metric-label">CPU</div>
+          <div class="metric-value">{{ cpu }}</div>
+        </div>
+        {% endif %} {% if plugin_settings.show_memory == "true" %}
+        <div class="metric-card metric-mem">
+          <div class="metric-label">MEMORY</div>
+          <div class="metric-value">{{ memory }}</div>
+        </div>
+        {% endif %} {% if plugin_settings.show_temp == "true" %}
+        <div class="metric-card metric-temp">
+          <div class="metric-label">TEMP</div>
+          <div class="metric-value smaller">{{ temperature }}</div>
+        </div>
+        {% endif %}
+      </div>
+
+      {% if plugin_settings.show_interfaces == "true" %}
+      <!-- Interfaces list -->
+      <div class="interfaces-card">
+        <div class="section-title">Interfaces (clients seen)</div>
+        <div class="iface-list">
+          {% for iface in iface_items %}
+          <div class="iface-row">
+            <div class="iface-name">{{ iface.name }}</div>
+            <div class="iface-bar">
+              <div
+                class="bar-fill {% if iface.name == 'LAN' %} bar-lan {% elif iface.name == 'VLAN_IOT' %} bar-vlan_iot {% elif iface.name == 'VLAN_CCTV' %} bar-vlan_cctv {% elif iface.name == 'VLAN_WORK' %} bar-vlan_work {% elif iface.name == 'VLAN_GUEST' %} bar-vlan_guest {% else %} bar-other {% endif %}"
+                style="width: {{ iface.pct }}%;"
+              ></div>
+            </div>
+            <div class="iface-count">{{ iface.count }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
+{% endblock %}

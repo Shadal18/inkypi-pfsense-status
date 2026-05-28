@@ -1,0 +1,6 @@
+{
+  "display_name": "pfSense Status",
+  "id": "pfsense_status",
+  "class": "PfSenseStatus",
+  "repository": "https://github.com/shadal18/InkyPi-PfSense-Status"
+}

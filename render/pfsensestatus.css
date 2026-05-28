@@ -1,0 +1,201 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+.root {
+  height: 100vh;
+  padding: 20px 0 0 0; /* no left/right padding */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+}
+
+/* Header: title + WAN card */
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 8px 8px 8px; /* small insets for header only */
+}
+
+.title-block {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 20px;
+  color: gray;
+  margin-top: 4px;
+}
+
+.wan-card {
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 10px 16px;
+  min-width: 230px;
+  text-align: right;
+  background: #ffe4b5;
+}
+
+.wan-label {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.wan-status {
+  font-size: 26px;
+  font-weight: 800;
+  margin: 4px 0;
+}
+
+.wan-status.ok {
+  color: #008000;
+}
+
+.wan-status.down {
+  color: #b00000;
+}
+
+.wan-ip {
+  font-size: 16px;
+}
+
+/* Metrics row: 5 cards */
+.metrics-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 4px 8px 4px; /* 4px side margin total */
+  column-gap: 2px;
+}
+
+.metric-card {
+  flex: 1;
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 10px 8px;
+  margin: 0; /* gaps handled by column-gap */
+  box-sizing: border-box;
+}
+
+.metric-card:last-child {
+  margin-right: 0;
+}
+
+/* colored metric cards */
+.metric-clients {
+  background: #ffcccc;
+}
+.metric-uptime {
+  background: #ccffcc;
+}
+.metric-cpu {
+  background: #cce5ff;
+}
+.metric-mem {
+  background: #fff0b3;
+}
+.metric-temp {
+  background: #ffd6ff;
+}
+
+.metric-label {
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.metric-value {
+  font-size: 46px;
+  font-weight: 800;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.metric-value.smaller {
+  font-size: 26px;
+}
+
+/* Interfaces list */
+.interfaces-card {
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 8px 8px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background: #f5f5f5;
+  margin: 0 4px 0 4px; /* line up with metrics row */
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.iface-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.iface-row {
+  display: flex;
+  align-items: center;
+}
+
+.iface-name {
+  width: 150px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.iface-bar {
+  flex: 1;
+  height: 14px;
+  border: 1px solid black;
+  margin: 0 8px;
+  box-sizing: border-box;
+  background: #ffffff;
+}
+
+.bar-fill {
+  height: 100%;
+}
+
+/* colorful bars */
+.bar-lan {
+  background: #000000;
+}
+.bar-vlan_iot {
+  background: #ff0000;
+}
+.bar-vlan_cctv {
+  background: #0000ff;
+}
+.bar-vlan_work {
+  background: #00aa00;
+}
+.bar-vlan_guest {
+  background: #ffa500;
+}
+.bar-other {
+  background: #800080;
+}
+
+.iface-count {
+  width: 40px;
+  font-size: 16px;
+  text-align: right;
+}

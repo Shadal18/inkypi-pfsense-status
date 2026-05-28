@@ -1,0 +1,163 @@
+<form>
+  <input type="hidden" name="plugin_id" value="pfsense_status" />
+
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" id="title" name="title" placeholder="pfSense Status" class="form-control" />
+    <small class="form-text text-muted">Text shown at the top of the status panel.</small>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">Cards to display</label>
+
+    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px">
+      <div
+        class="form-group"
+        style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0"
+      >
+        <label for="show_clients" class="form-label" style="margin: 0">Clients</label>
+        <input
+          type="checkbox"
+          id="show_clients"
+          name="show_clients"
+          onclick="this.value = this.checked ? 'true' : 'false'"
+        />
+      </div>
+
+      <div
+        class="form-group"
+        style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0"
+      >
+        <label for="show_uptime" class="form-label" style="margin: 0">Uptime</label>
+        <input
+          type="checkbox"
+          id="show_uptime"
+          name="show_uptime"
+          onclick="this.value = this.checked ? 'true' : 'false'"
+        />
+      </div>
+
+      <div
+        class="form-group"
+        style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0"
+      >
+        <label for="show_cpu" class="form-label" style="margin: 0">CPU</label>
+        <input type="checkbox" id="show_cpu" name="show_cpu" onclick="this.value = this.checked ? 'true' : 'false'" />
+      </div>
+
+      <div
+        class="form-group"
+        style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0"
+      >
+        <label for="show_memory" class="form-label" style="margin: 0">Memory</label>
+        <input
+          type="checkbox"
+          id="show_memory"
+          name="show_memory"
+          onclick="this.value = this.checked ? 'true' : 'false'"
+        />
+      </div>
+
+      <div
+        class="form-group"
+        style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0"
+      >
+        <label for="show_temp" class="form-label" style="margin: 0">Temperature</label>
+        <input type="checkbox" id="show_temp" name="show_temp" onclick="this.value = this.checked ? 'true' : 'false'" />
+      </div>
+
+      <div
+        class="form-group"
+        style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0"
+      >
+        <label for="show_interfaces" class="form-label" style="margin: 0">Interfaces list</label>
+        <input
+          type="checkbox"
+          id="show_interfaces"
+          name="show_interfaces"
+          onclick="this.value = this.checked ? 'true' : 'false'"
+        />
+      </div>
+    </div>
+
+    <small class="form-text text-muted" style="display: block; margin-top: 10px">
+      Uncheck any cards you do not want to show on the display.
+    </small>
+  </div>
+
+  <hr style="border: 0; border-top: 1px solid rgba(255, 255, 255, 0.12); margin: 24px 0 18px" />
+
+  <div class="form-group" style="margin-bottom: 20px">
+    <div
+      style="
+        font-size: 0.95rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: rgba(255, 255, 255, 0.72);
+        margin-bottom: 10px;
+      "
+    >
+      Plugin Repository
+    </div>
+
+    <div
+      style="
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        padding: 14px 16px;
+      "
+    >
+      <a
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="
+          color: #4f8cff;
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 1rem;
+          word-break: break-word;
+          display: inline-block;
+          margin-bottom: 6px;
+          pointer-events: none;
+          opacity: 0.75;
+        "
+      >
+        Repository link coming soon
+      </a>
+
+      <div style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.55)">
+        Setup help, updates, release notes, and source code.
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    if (typeof pluginSettings !== "undefined" && pluginSettings) {
+      const titleInput = document.getElementById("title")
+      if (titleInput) {
+        titleInput.value = pluginSettings.title || "pfSense Status"
+      }
+
+      const initCheckbox = (id, key) => {
+        const el = document.getElementById(id)
+        if (!el) return
+        const val = pluginSettings[key]
+        const on = val === undefined || val === null ? true : val === true || val === "true"
+        el.checked = on
+        el.value = on ? "true" : "false"
+      }
+
+      initCheckbox("show_clients", "show_clients")
+      initCheckbox("show_uptime", "show_uptime")
+      initCheckbox("show_cpu", "show_cpu")
+      initCheckbox("show_memory", "show_memory")
+      initCheckbox("show_temp", "show_temp")
+      initCheckbox("show_interfaces", "show_interfaces")
+    }
+  })
+</script>
