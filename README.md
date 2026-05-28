@@ -44,9 +44,9 @@ If you do not see changes after updating:
 - Network access from the InkyPi device to the pfSense host.
 - HTTPS access configured correctly if your pfSense API is exposed over SSL.
 
-This plugin is an extension for the InkyPi e-paper display frame and includes the following features.
-
 ## Features
+
+This plugin is an extension for the InkyPi e-paper display frame and includes the following features.
 
 - Shows active client count based on the pfSense ARP table.
 - Shows system uptime.
