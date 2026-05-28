@@ -2,18 +2,9 @@
 
 An InkyPi plugin that displays key pfSense status information on your e-paper dashboard.
 
-It can show:
-
-- Active clients
-- System uptime
-- CPU usage
-- Memory usage
-- Temperature
-- Interface summary
-
 ## Install
 
-Install the plugin from your InkyPi device:
+Use the InkyPi plugin installer with the plugin ID and this repository URL, following the install pattern shown by the official InkyPi plugin template.
 
 ```bash
 inkypi plugin install pfsense_status https://github.com/shadal18/inkypi-pfsense-status
@@ -45,6 +36,34 @@ If you do not see changes after updating:
 - Clear your browser cache or hard refresh the InkyPi web UI.
 - Check the InkyPi logs for any plugin errors.
 
+## Requirements
+
+- A working InkyPi installation with plugin support.
+- A reachable pfSense instance with the REST API enabled and accessible.
+- A valid pfSense REST API key with permission to access status and diagnostics endpoints.
+- Network access from the InkyPi device to the pfSense host.
+- HTTPS access configured correctly if your pfSense API is exposed over SSL.
+
+This plugin is an extension for the InkyPi e-paper display frame and includes the following features.
+
+## Features
+
+- Shows active client count based on the pfSense ARP table.
+- Shows system uptime.
+- Shows CPU usage.
+- Shows memory usage.
+- Shows system temperature when available from the pfSense API.
+- Shows WAN status and WAN IP information.
+- Shows interface client distribution summary based on ARP table activity.
+- Configurable title text.
+- Optional display of clients card.
+- Optional display of uptime card.
+- Optional display of CPU card.
+- Optional display of memory card.
+- Optional display of temperature card.
+- Optional display of interfaces list.
+- Clean layout optimized for quick glance reading on e-paper.
+
 ## pfSense API key setup
 
 This plugin requires a pfSense REST API key, and the key can be created from the pfSense web interface under **System > REST API > Keys** .
@@ -71,3 +90,13 @@ The plugin settings page lets you customize:
 GitHub repository:
 
 [https://github.com/shadal18/inkypi-pfsense-status](https://github.com/shadal18/inkypi-pfsense-status)
+
+## Screenshots
+
+- Main plugin display showing active spools.
+- Plugin settings screen.
+
+<p align="center">
+  <img src="screenshots/example.png" width="45%" />
+  <img src="screenshots/settings.png" width="45%" />
+</p>
