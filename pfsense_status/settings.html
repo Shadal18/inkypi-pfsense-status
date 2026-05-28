@@ -110,7 +110,7 @@
       "
     >
       <a
-        href="#"
+        href="https://github.com/Shadal18/inkypi-pfsense-status"
         target="_blank"
         rel="noopener noreferrer"
         style="
@@ -121,11 +121,9 @@
           word-break: break-word;
           display: inline-block;
           margin-bottom: 6px;
-          pointer-events: none;
-          opacity: 0.75;
         "
       >
-        Repository link coming soon
+        github.com/Shadal18/inkypi-pfsense-status
       </a>
 
       <div style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.55)">
@@ -133,31 +131,31 @@
       </div>
     </div>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (typeof pluginSettings !== "undefined" && pluginSettings) {
+        const titleInput = document.getElementById("title")
+        if (titleInput) {
+          titleInput.value = pluginSettings.title || "pfSense Status"
+        }
+
+        const initCheckbox = (id, key) => {
+          const el = document.getElementById(id)
+          if (!el) return
+          const val = pluginSettings[key]
+          const on = val === undefined || val === null ? true : val === true || val === "true"
+          el.checked = on
+          el.value = on ? "true" : "false"
+        }
+
+        initCheckbox("show_clients", "show_clients")
+        initCheckbox("show_uptime", "show_uptime")
+        initCheckbox("show_cpu", "show_cpu")
+        initCheckbox("show_memory", "show_memory")
+        initCheckbox("show_temp", "show_temp")
+        initCheckbox("show_interfaces", "show_interfaces")
+      }
+    })
+  </script>
 </form>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    if (typeof pluginSettings !== "undefined" && pluginSettings) {
-      const titleInput = document.getElementById("title")
-      if (titleInput) {
-        titleInput.value = pluginSettings.title || "pfSense Status"
-      }
-
-      const initCheckbox = (id, key) => {
-        const el = document.getElementById(id)
-        if (!el) return
-        const val = pluginSettings[key]
-        const on = val === undefined || val === null ? true : val === true || val === "true"
-        el.checked = on
-        el.value = on ? "true" : "false"
-      }
-
-      initCheckbox("show_clients", "show_clients")
-      initCheckbox("show_uptime", "show_uptime")
-      initCheckbox("show_cpu", "show_cpu")
-      initCheckbox("show_memory", "show_memory")
-      initCheckbox("show_temp", "show_temp")
-      initCheckbox("show_interfaces", "show_interfaces")
-    }
-  })
-</script>
