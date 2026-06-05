@@ -2,6 +2,8 @@
 
 An InkyPi plugin that displays key pfSense status information on your e-paper dashboard.
 
+_pfSense Status_ is a plugin for [InkyPi](https://github.com/fatihak/InkyPi) that exposes core pfSense firewall and network stats on your InkyPi frame.
+
 ## Install
 
 Use the InkyPi plugin installer with the plugin ID and this repository URL, following the install pattern shown by the official InkyPi plugin template.
