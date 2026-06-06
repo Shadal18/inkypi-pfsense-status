@@ -8,7 +8,7 @@
     --ag-border-strong: var(--border-color-strong, rgba(15, 23, 42, 0.18));
     --ag-text: var(--text-primary, var(--color-text, #0f172a));
     --ag-text-muted: var(--text-secondary, var(--color-text-secondary, #475569));
-    --ag-text-soft: var(--text-muted, #64748b));
+    --ag-text-soft: var(--text-muted, #64748b);
     --ag-primary: var(--accent-color, #14b8a6);
     --ag-info: var(--info-color, #3b82f6);
     --ag-shadow-sm: 0 8px 24px rgba(15, 23, 42, 0.08);
@@ -285,18 +285,25 @@
     color: var(--ag-text);
   }
 
-  .ph-toggle-card label {
+  .ph-toggle-row {
     display: flex;
-    gap: 10px;
     align-items: flex-start;
-    cursor: pointer;
-    margin: 0;
+    gap: 10px;
   }
 
-  .ph-toggle-card input[type="checkbox"] {
-    margin-top: 2px;
+  .ph-toggle-control {
+    flex: 0 0 auto;
+    padding-top: 2px;
+  }
+
+  .ph-toggle-control input[type="checkbox"] {
+    margin: 0;
     accent-color: var(--ag-primary);
-    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  .ph-toggle-text {
+    min-width: 0;
   }
 
   .ph-toggle-title {
@@ -465,70 +472,82 @@
       </div>
       <div class="ph-section-body">
         <div class="ph-toggle-grid">
-          <input type="hidden" name="show_clients" value="false" />
           <div class="ph-toggle-card">
-            <label>
-              <input type="checkbox" id="show_clients" name="show_clients" value="true" />
-              <span>
+            <div class="ph-toggle-row">
+              <div class="ph-toggle-control">
+                <input type="checkbox" id="show_clients_toggle" />
+              </div>
+              <div class="ph-toggle-text">
                 <div class="ph-toggle-title">Clients</div>
                 <div class="ph-toggle-copy">Show connected or active client information.</div>
-              </span>
-            </label>
+              </div>
+            </div>
+            <input type="hidden" id="show_clients" name="show_clients" value="true" />
           </div>
 
-          <input type="hidden" name="show_uptime" value="false" />
           <div class="ph-toggle-card">
-            <label>
-              <input type="checkbox" id="show_uptime" name="show_uptime" value="true" />
-              <span>
+            <div class="ph-toggle-row">
+              <div class="ph-toggle-control">
+                <input type="checkbox" id="show_uptime_toggle" />
+              </div>
+              <div class="ph-toggle-text">
                 <div class="ph-toggle-title">Uptime</div>
                 <div class="ph-toggle-copy">Show pfSense uptime on the dashboard.</div>
-              </span>
-            </label>
+              </div>
+            </div>
+            <input type="hidden" id="show_uptime" name="show_uptime" value="true" />
           </div>
 
-          <input type="hidden" name="show_cpu" value="false" />
           <div class="ph-toggle-card">
-            <label>
-              <input type="checkbox" id="show_cpu" name="show_cpu" value="true" />
-              <span>
+            <div class="ph-toggle-row">
+              <div class="ph-toggle-control">
+                <input type="checkbox" id="show_cpu_toggle" />
+              </div>
+              <div class="ph-toggle-text">
                 <div class="ph-toggle-title">CPU</div>
                 <div class="ph-toggle-copy">Show current CPU usage information.</div>
-              </span>
-            </label>
+              </div>
+            </div>
+            <input type="hidden" id="show_cpu" name="show_cpu" value="true" />
           </div>
 
-          <input type="hidden" name="show_memory" value="false" />
           <div class="ph-toggle-card">
-            <label>
-              <input type="checkbox" id="show_memory" name="show_memory" value="true" />
-              <span>
+            <div class="ph-toggle-row">
+              <div class="ph-toggle-control">
+                <input type="checkbox" id="show_memory_toggle" />
+              </div>
+              <div class="ph-toggle-text">
                 <div class="ph-toggle-title">Memory</div>
                 <div class="ph-toggle-copy">Show current memory usage information.</div>
-              </span>
-            </label>
+              </div>
+            </div>
+            <input type="hidden" id="show_memory" name="show_memory" value="true" />
           </div>
 
-          <input type="hidden" name="show_temp" value="false" />
           <div class="ph-toggle-card">
-            <label>
-              <input type="checkbox" id="show_temp" name="show_temp" value="true" />
-              <span>
+            <div class="ph-toggle-row">
+              <div class="ph-toggle-control">
+                <input type="checkbox" id="show_temp_toggle" />
+              </div>
+              <div class="ph-toggle-text">
                 <div class="ph-toggle-title">Temperature</div>
                 <div class="ph-toggle-copy">Show temperature data when available.</div>
-              </span>
-            </label>
+              </div>
+            </div>
+            <input type="hidden" id="show_temp" name="show_temp" value="true" />
           </div>
 
-          <input type="hidden" name="show_interfaces" value="false" />
           <div class="ph-toggle-card">
-            <label>
-              <input type="checkbox" id="show_interfaces" name="show_interfaces" value="true" />
-              <span>
+            <div class="ph-toggle-row">
+              <div class="ph-toggle-control">
+                <input type="checkbox" id="show_interfaces_toggle" />
+              </div>
+              <div class="ph-toggle-text">
                 <div class="ph-toggle-title">Interfaces list</div>
                 <div class="ph-toggle-copy">Show the network interfaces summary or list.</div>
-              </span>
-            </label>
+              </div>
+            </div>
+            <input type="hidden" id="show_interfaces" name="show_interfaces" value="true" />
           </div>
         </div>
         <p class="ph-note" style="margin-top: 12px">Uncheck any cards you do not want to show on the display.</p>
@@ -557,12 +576,13 @@
     return normalized === "true" || normalized === "1" || normalized === "on" || normalized === "yes"
   }
 
-  function initCheckbox(settingName, defaultValue = true) {
-    const checkbox = document.getElementById(settingName)
-    if (!checkbox) return
+  function initToggle(settingName, defaultValue = true) {
+    const hiddenInput = document.getElementById(settingName)
+    const toggle = document.getElementById(settingName + "_toggle")
+
+    if (!hiddenInput || !toggle) return
 
     let currentValue = defaultValue
-
     if (
       typeof loadPluginSettings !== "undefined" &&
       loadPluginSettings &&
@@ -573,7 +593,13 @@
       currentValue = pluginSettings[settingName]
     }
 
-    checkbox.checked = asBool(currentValue, defaultValue)
+    const enabled = asBool(currentValue, defaultValue)
+    hiddenInput.value = enabled ? "true" : "false"
+    toggle.checked = enabled
+
+    toggle.addEventListener("change", () => {
+      hiddenInput.value = toggle.checked ? "true" : "false"
+    })
   }
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -594,12 +620,12 @@
       }
     }
 
-    initCheckbox("show_clients", true)
-    initCheckbox("show_uptime", true)
-    initCheckbox("show_cpu", true)
-    initCheckbox("show_memory", true)
-    initCheckbox("show_temp", true)
-    initCheckbox("show_interfaces", true)
+    initToggle("show_clients", true)
+    initToggle("show_uptime", true)
+    initToggle("show_cpu", true)
+    initToggle("show_memory", true)
+    initToggle("show_temp", true)
+    initToggle("show_interfaces", true)
 
     if (typeof kofiWidgetOverlay !== "undefined") {
       kofiWidgetOverlay.draw("shadal", {

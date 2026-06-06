@@ -6,19 +6,18 @@ body {
 
 .root {
   height: 100vh;
-  padding: 20px 0 0 0; /* no left/right padding */
+  padding: 20px 0 0 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   font-family: sans-serif;
 }
 
-/* Header: title + WAN card */
 .header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 8px 8px 8px; /* small insets for header only */
+  margin: 0 8px 8px 8px;
 }
 
 .title-block {
@@ -70,11 +69,10 @@ body {
   font-size: 16px;
 }
 
-/* Metrics row: 5 cards */
 .metrics-row {
   display: flex;
   justify-content: space-between;
-  margin: 0 4px 8px 4px; /* 4px side margin total */
+  margin: 0 4px 8px 4px;
   column-gap: 2px;
 }
 
@@ -83,7 +81,7 @@ body {
   border: 2px solid black;
   border-radius: 8px;
   padding: 10px 8px;
-  margin: 0; /* gaps handled by column-gap */
+  margin: 0;
   box-sizing: border-box;
 }
 
@@ -91,19 +89,22 @@ body {
   margin-right: 0;
 }
 
-/* colored metric cards */
 .metric-clients {
   background: #ffcccc;
 }
+
 .metric-uptime {
   background: #ccffcc;
 }
+
 .metric-cpu {
   background: #cce5ff;
 }
+
 .metric-mem {
   background: #fff0b3;
 }
+
 .metric-temp {
   background: #ffd6ff;
 }
@@ -126,7 +127,6 @@ body {
   font-size: 26px;
 }
 
-/* Interfaces list */
 .interfaces-card {
   border: 2px solid black;
   border-radius: 8px;
@@ -135,7 +135,7 @@ body {
   display: flex;
   flex-direction: column;
   background: #f5f5f5;
-  margin: 0 4px 0 4px; /* line up with metrics row */
+  margin: 0 4px 0 4px;
 }
 
 .section-title {
@@ -174,22 +174,26 @@ body {
   height: 100%;
 }
 
-/* colorful bars */
 .bar-lan {
   background: #000000;
 }
+
 .bar-vlan_iot {
   background: #ff0000;
 }
+
 .bar-vlan_cctv {
   background: #0000ff;
 }
+
 .bar-vlan_work {
   background: #00aa00;
 }
+
 .bar-vlan_guest {
   background: #ffa500;
 }
+
 .bar-other {
   background: #800080;
 }
