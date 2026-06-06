@@ -1,162 +1,562 @@
-<form>
+<style>
+  :root {
+    --ag-bg: var(--background-color, var(--color-background, #f5f7fb));
+    --ag-bg-soft: var(--card-background-secondary, var(--color-surface-2, #eef2f7));
+    --ag-panel: var(--card-background, var(--color-surface, #ffffff));
+    --ag-panel-2: var(--card-background-hover, var(--color-surface-2, #f8fafc));
+    --ag-border: var(--border-color, rgba(15, 23, 42, 0.12));
+    --ag-border-strong: var(--border-color-strong, rgba(15, 23, 42, 0.18));
+    --ag-text: var(--text-primary, var(--color-text, #0f172a));
+    --ag-text-muted: var(--text-secondary, var(--color-text-secondary, #475569));
+    --ag-text-soft: var(--text-muted, #64748b);
+    --ag-primary: var(--accent-color, #14b8a6);
+    --ag-info: var(--info-color, #3b82f6);
+    --ag-shadow-sm: 0 8px 24px rgba(15, 23, 42, 0.08);
+    --ag-radius-xl: 18px;
+    --ag-radius-lg: 14px;
+  }
+
+  html.dark,
+  body.dark,
+  [data-theme="dark"],
+  html[data-theme="dark"] {
+    --ag-bg: var(--background-color, var(--color-background, #0f172a));
+    --ag-bg-soft: var(--card-background-secondary, var(--color-surface-2, #162033));
+    --ag-panel: var(--card-background, var(--color-surface, #111827));
+    --ag-panel-2: var(--card-background-hover, var(--color-surface-2, #172033));
+    --ag-border: var(--border-color, rgba(255, 255, 255, 0.1));
+    --ag-border-strong: var(--border-color-strong, rgba(255, 255, 255, 0.16));
+    --ag-text: var(--text-primary, var(--color-text, #f8fafc));
+    --ag-text-muted: var(--text-secondary, var(--color-text-secondary, #cbd5e1));
+    --ag-text-soft: var(--text-muted, #94a3b8);
+    --ag-shadow-sm: 0 10px 28px rgba(0, 0, 0, 0.22);
+  }
+
+  .pfsense-settings-container {
+    width: 100%;
+    box-sizing: border-box;
+    color: var(--ag-text);
+  }
+
+  .ph-shell {
+    display: grid;
+    gap: 18px;
+    margin-top: 8px;
+  }
+
+  .ph-hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--ag-radius-xl);
+    border: 1px solid var(--ag-border);
+    background:
+      radial-gradient(circle at top right, color-mix(in srgb, var(--ag-primary) 16%, transparent), transparent 34%),
+      radial-gradient(circle at bottom left, color-mix(in srgb, var(--ag-info) 12%, transparent), transparent 30%),
+      linear-gradient(180deg, color-mix(in srgb, var(--ag-panel) 92%, var(--ag-bg-soft) 8%), var(--ag-panel-2));
+    box-shadow: var(--ag-shadow-sm);
+    padding: 22px 22px 18px;
+  }
+
+  .ph-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--ag-primary) 14%, transparent);
+    color: var(--ag-primary);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    border: 1px solid color-mix(in srgb, var(--ag-primary) 22%, transparent);
+  }
+
+  .ph-hero h2 {
+    margin: 0;
+    color: var(--ag-text);
+    font-size: 28px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .ph-hero p {
+    margin: 10px 0 0;
+    max-width: 68ch;
+    color: var(--ag-text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .ph-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .ph-metric {
+    border: 1px solid var(--ag-border);
+    border-radius: var(--ag-radius-lg);
+    background: color-mix(in srgb, var(--ag-panel) 92%, var(--ag-bg) 8%);
+    padding: 14px 14px 12px;
+    min-width: 0;
+    box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 22%, transparent);
+  }
+
+  .ph-metric-label {
+    color: var(--ag-text-soft);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .ph-metric-value {
+    color: var(--ag-text);
+    font-size: 28px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+
+  .ph-metric-sub {
+    color: var(--ag-text-muted);
+    font-size: 12px;
+    margin-top: 6px;
+  }
+
+  .ph-section,
+  .ph-link-card {
+    border: 1px solid var(--ag-border);
+    border-radius: var(--ag-radius-xl);
+    background: linear-gradient(180deg, var(--ag-panel), var(--ag-panel-2));
+    box-shadow: var(--ag-shadow-sm);
+    overflow: hidden;
+  }
+
+  .ph-section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--ag-border);
+  }
+
+  .ph-section-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    border: 1px solid var(--ag-border);
+    background: color-mix(in srgb, var(--ag-bg-soft) 65%, var(--ag-panel) 35%);
+  }
+
+  .ph-section-copy {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ph-section-title {
+    color: var(--ag-text);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .ph-section-subtitle {
+    color: var(--ag-text-muted);
+    font-size: 13px;
+    margin-top: 4px;
+  }
+
+  .ph-section-body {
+    padding: 18px 20px 20px;
+  }
+
+  .ph-grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .ph-field {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .ph-label {
+    color: var(--ag-text-soft);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .ph-input,
+  .pfsense-settings-container input[type="text"],
+  .pfsense-settings-container input[type="password"],
+  .pfsense-settings-container input[type="number"],
+  .pfsense-settings-container input[type="url"],
+  .pfsense-settings-container select {
+    width: 100%;
+    min-height: 46px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 1px solid var(--ag-border);
+    background: var(--ag-panel);
+    color: var(--ag-text);
+    outline: none;
+    box-sizing: border-box;
+    box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 14%, transparent);
+  }
+
+  .ph-input::placeholder,
+  .pfsense-settings-container input::placeholder {
+    color: var(--ag-text-soft);
+    opacity: 1;
+  }
+
+  .ph-input:focus,
+  .pfsense-settings-container input:focus,
+  .pfsense-settings-container select:focus {
+    border-color: color-mix(in srgb, var(--ag-primary) 45%, transparent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--ag-primary) 14%, transparent);
+  }
+
+  .ph-note {
+    margin: 0;
+    color: var(--ag-text-muted);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .ph-toggle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+
+  .ph-toggle-card {
+    border: 1px solid var(--ag-border);
+    border-radius: var(--ag-radius-lg);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--ag-panel) 96%, #fff 4%),
+      color-mix(in srgb, var(--ag-panel-2) 96%, var(--ag-bg) 4%)
+    );
+    padding: 14px;
+    box-shadow: 0 1px 0 color-mix(in srgb, #fff 16%, transparent);
+    color: var(--ag-text);
+  }
+
+  .ph-toggle-card label {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    cursor: pointer;
+    margin: 0;
+  }
+
+  .ph-toggle-card input[type="checkbox"] {
+    margin-top: 2px;
+    accent-color: var(--ag-primary);
+    flex-shrink: 0;
+  }
+
+  .ph-toggle-title {
+    color: var(--ag-text);
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 4px;
+  }
+
+  .ph-toggle-copy {
+    color: var(--ag-text-muted);
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .ph-link-card {
+    padding: 16px 20px;
+  }
+
+  .ph-link-card a {
+    color: var(--ag-primary);
+    text-decoration: none;
+    font-weight: 700;
+    word-break: break-word;
+  }
+
+  .ph-link-card a:hover,
+  .ph-link-card a:focus-visible {
+    text-decoration: underline;
+    outline: none;
+  }
+
+  .ph-link-help {
+    margin-top: 8px;
+    color: var(--ag-text-muted);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .floatingchat-container-wrap,
+  .floatingchat-container-wrap-mobi {
+    left: unset !important;
+    right: 16px !important;
+    bottom: 16px !important;
+  }
+
+  .floating-chat-kofi-popup-iframe {
+    left: unset !important;
+    right: 16px !important;
+    bottom: 76px !important;
+  }
+
+  @media (max-width: 920px) {
+    .ph-metrics {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .ph-hero {
+      padding: 18px;
+    }
+
+    .ph-hero h2 {
+      font-size: 22px;
+    }
+
+    .ph-section-header {
+      padding: 16px;
+    }
+
+    .ph-section-body,
+    .ph-link-card {
+      padding: 16px;
+    }
+  }
+</style>
+
+<div class="pfsense-settings-container">
   <input type="hidden" name="plugin_id" value="pfsense_status" />
 
-  <div class="form-group">
-    <label for="title">Title</label>
-    <input type="text" id="title" name="title" placeholder="pfSense Status" class="form-control" />
-    <small class="form-text text-muted">Text shown at the top of the status panel.</small>
-  </div>
+  <div class="ph-shell">
+    <section class="ph-hero">
+      <div class="ph-eyebrow">pfSense</div>
+      <h2>Display your firewall status at a glance.</h2>
+      <p>
+        Customize the pfSense dashboard title and choose which status cards appear on the rendered display, using the
+        same settings layout as the Pi-hole, AdGuard, and Hubitat plugins.
+      </p>
 
-  <div class="form-group">
-    <label class="form-label">Cards to display</label>
-
-    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px">
-      <div
-        class="form-group"
-        style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0"
-      >
-        <label for="show_clients" class="form-label" style="margin: 0">Clients</label>
-        <input
-          type="checkbox"
-          id="show_clients"
-          name="show_clients"
-          onclick="this.value = this.checked ? 'true' : 'false'"
-        />
+      <div class="ph-metrics">
+        <div class="ph-metric">
+          <div class="ph-metric-label">Source</div>
+          <div class="ph-metric-value">pfSense</div>
+          <div class="ph-metric-sub">Firewall status data</div>
+        </div>
+        <div class="ph-metric">
+          <div class="ph-metric-label">Display</div>
+          <div class="ph-metric-value">E-Ink</div>
+          <div class="ph-metric-sub">Dashboard-ready layout</div>
+        </div>
+        <div class="ph-metric">
+          <div class="ph-metric-label">Profile</div>
+          <div class="ph-metric-value">Status</div>
+          <div class="ph-metric-sub">Network overview plugin</div>
+        </div>
       </div>
+    </section>
 
-      <div
-        class="form-group"
-        style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0"
-      >
-        <label for="show_uptime" class="form-label" style="margin: 0">Uptime</label>
-        <input
-          type="checkbox"
-          id="show_uptime"
-          name="show_uptime"
-          onclick="this.value = this.checked ? 'true' : 'false'"
-        />
+    <section class="ph-section">
+      <div class="ph-section-header">
+        <span class="ph-section-icon" aria-hidden="true">📝</span>
+        <div class="ph-section-copy">
+          <div class="ph-section-title">Header</div>
+          <div class="ph-section-subtitle">Set the title shown at the top of the status panel.</div>
+        </div>
       </div>
-
-      <div
-        class="form-group"
-        style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0"
-      >
-        <label for="show_cpu" class="form-label" style="margin: 0">CPU</label>
-        <input type="checkbox" id="show_cpu" name="show_cpu" onclick="this.value = this.checked ? 'true' : 'false'" />
+      <div class="ph-section-body">
+        <div class="ph-grid">
+          <div class="ph-field">
+            <label class="ph-label" for="title">Title</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              class="ph-input"
+              placeholder="pfSense Status"
+              autocomplete="off"
+            />
+            <p class="ph-note">This text appears as the main heading on the rendered status panel.</p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div
-        class="form-group"
-        style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0"
-      >
-        <label for="show_memory" class="form-label" style="margin: 0">Memory</label>
-        <input
-          type="checkbox"
-          id="show_memory"
-          name="show_memory"
-          onclick="this.value = this.checked ? 'true' : 'false'"
-        />
+    <section class="ph-section">
+      <div class="ph-section-header">
+        <span class="ph-section-icon" aria-hidden="true">📊</span>
+        <div class="ph-section-copy">
+          <div class="ph-section-title">Display cards</div>
+          <div class="ph-section-subtitle">Choose which pfSense status cards appear on the display.</div>
+        </div>
       </div>
+      <div class="ph-section-body">
+        <div class="ph-toggle-grid">
+          <input type="hidden" name="show_clients" value="false" />
+          <div class="ph-toggle-card">
+            <label>
+              <input type="checkbox" id="show_clients" name="show_clients" value="true" />
+              <span>
+                <div class="ph-toggle-title">Clients</div>
+                <div class="ph-toggle-copy">Show connected or active client information.</div>
+              </span>
+            </label>
+          </div>
 
-      <div
-        class="form-group"
-        style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0"
-      >
-        <label for="show_temp" class="form-label" style="margin: 0">Temperature</label>
-        <input type="checkbox" id="show_temp" name="show_temp" onclick="this.value = this.checked ? 'true' : 'false'" />
+          <input type="hidden" name="show_uptime" value="false" />
+          <div class="ph-toggle-card">
+            <label>
+              <input type="checkbox" id="show_uptime" name="show_uptime" value="true" />
+              <span>
+                <div class="ph-toggle-title">Uptime</div>
+                <div class="ph-toggle-copy">Show pfSense uptime on the dashboard.</div>
+              </span>
+            </label>
+          </div>
+
+          <input type="hidden" name="show_cpu" value="false" />
+          <div class="ph-toggle-card">
+            <label>
+              <input type="checkbox" id="show_cpu" name="show_cpu" value="true" />
+              <span>
+                <div class="ph-toggle-title">CPU</div>
+                <div class="ph-toggle-copy">Show current CPU usage information.</div>
+              </span>
+            </label>
+          </div>
+
+          <input type="hidden" name="show_memory" value="false" />
+          <div class="ph-toggle-card">
+            <label>
+              <input type="checkbox" id="show_memory" name="show_memory" value="true" />
+              <span>
+                <div class="ph-toggle-title">Memory</div>
+                <div class="ph-toggle-copy">Show current memory usage information.</div>
+              </span>
+            </label>
+          </div>
+
+          <input type="hidden" name="show_temp" value="false" />
+          <div class="ph-toggle-card">
+            <label>
+              <input type="checkbox" id="show_temp" name="show_temp" value="true" />
+              <span>
+                <div class="ph-toggle-title">Temperature</div>
+                <div class="ph-toggle-copy">Show temperature data when available.</div>
+              </span>
+            </label>
+          </div>
+
+          <input type="hidden" name="show_interfaces" value="false" />
+          <div class="ph-toggle-card">
+            <label>
+              <input type="checkbox" id="show_interfaces" name="show_interfaces" value="true" />
+              <span>
+                <div class="ph-toggle-title">Interfaces list</div>
+                <div class="ph-toggle-copy">Show the network interfaces summary or list.</div>
+              </span>
+            </label>
+          </div>
+        </div>
+        <p class="ph-note" style="margin-top: 12px">Uncheck any cards you do not want to show on the display.</p>
       </div>
+    </section>
 
-      <div
-        class="form-group"
-        style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0"
-      >
-        <label for="show_interfaces" class="form-label" style="margin: 0">Interfaces list</label>
-        <input
-          type="checkbox"
-          id="show_interfaces"
-          name="show_interfaces"
-          onclick="this.value = this.checked ? 'true' : 'false'"
-        />
-      </div>
-    </div>
-
-    <small class="form-text text-muted" style="display: block; margin-top: 10px">
-      Uncheck any cards you do not want to show on the display.
-    </small>
-  </div>
-
-  <hr style="border: 0; border-top: 1px solid rgba(0, 0, 0, 0.12); margin: 24px 0 18px" />
-
-  <div class="form-group" style="margin-bottom: 20px">
-    <div
-      style="
-        font-size: 0.95rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        color: #555;
-        margin-bottom: 10px;
-      "
-    >
-      Plugin Repository
-    </div>
-
-    <div style="background: #f8f9fa; border: 1px solid #dcdfe3; border-radius: 10px; padding: 14px 16px">
-      <a
-        href="https://github.com/shadal18/inkypi-pfsense-status"
-        target="_blank"
-        rel="noopener noreferrer"
-        style="
-          color: #0d6efd;
-          text-decoration: none;
-          font-weight: 600;
-          font-size: 1rem;
-          word-break: break-word;
-          display: inline-block;
-          margin-bottom: 6px;
-        "
-      >
+    <section class="ph-link-card">
+      <a href="https://github.com/shadal18/inkypi-pfsense-status" target="_blank" rel="noopener noreferrer">
         github.com/shadal18/inkypi-pfsense-status
       </a>
-
-      <div style="font-size: 0.9rem; color: #666">Setup help, updates, release notes, and source code.</div>
-    </div>
+      <div class="ph-link-help">Setup help, updates, release notes, and source code.</div>
+    </section>
   </div>
+</div>
 
-  <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      if (typeof pluginSettings !== "undefined" && pluginSettings) {
-        const titleInput = document.getElementById("title")
-        if (titleInput) {
-          titleInput.value = pluginSettings.title || "pfSense Status"
-        }
+<script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
+<script>
+  function asBool(value, defaultValue = true) {
+    if (value === undefined || value === null || value === "") {
+      return defaultValue
+    }
+    if (typeof value === "boolean") {
+      return value
+    }
+    const normalized = String(value).toLowerCase()
+    return normalized === "true" || normalized === "1" || normalized === "on" || normalized === "yes"
+  }
 
-        const initCheckbox = (id, key) => {
-          const el = document.getElementById(id)
-          if (!el) return
-          const val = pluginSettings[key]
-          const on = val === undefined || val === null ? true : val === true || val === "true"
-          el.checked = on
-          el.value = on ? "true" : "false"
-        }
+  function initCheckbox(settingName, defaultValue = true) {
+    const checkbox = document.getElementById(settingName)
+    if (!checkbox) return
 
-        initCheckbox("show_clients", "show_clients")
-        initCheckbox("show_uptime", "show_uptime")
-        initCheckbox("show_cpu", "show_cpu")
-        initCheckbox("show_memory", "show_memory")
-        initCheckbox("show_temp", "show_temp")
-        initCheckbox("show_interfaces", "show_interfaces")
+    let currentValue = defaultValue
+
+    if (
+      typeof loadPluginSettings !== "undefined" &&
+      loadPluginSettings &&
+      typeof pluginSettings !== "undefined" &&
+      pluginSettings &&
+      pluginSettings[settingName] !== undefined
+    ) {
+      currentValue = pluginSettings[settingName]
+    }
+
+    checkbox.checked = asBool(currentValue, defaultValue)
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const titleInput = document.getElementById("title")
+
+    if (
+      typeof loadPluginSettings !== "undefined" &&
+      loadPluginSettings &&
+      typeof pluginSettings !== "undefined" &&
+      pluginSettings
+    ) {
+      if (titleInput) {
+        titleInput.value = pluginSettings.title || "pfSense Status"
       }
-
-      if (typeof kofiWidgetOverlay !== "undefined") {
-        kofiWidgetOverlay.draw("shadal", {
-          type: "floating-chat",
-          "floating-chat.donateButton.text": "Tip Jar!",
-          "floating-chat.donateButton.background-color": "#00b9fe",
-          "floating-chat.donateButton.text-color": "#fff",
-        })
+    } else {
+      if (titleInput) {
+        titleInput.value = "pfSense Status"
       }
-    })
-  </script>
-</form>
+    }
+
+    initCheckbox("show_clients", true)
+    initCheckbox("show_uptime", true)
+    initCheckbox("show_cpu", true)
+    initCheckbox("show_memory", true)
+    initCheckbox("show_temp", true)
+    initCheckbox("show_interfaces", true)
+
+    if (typeof kofiWidgetOverlay !== "undefined") {
+      kofiWidgetOverlay.draw("shadal", {
+        type: "floating-chat",
+        "floating-chat.donateButton.text": "Tip Jar!",
+        "floating-chat.donateButton.background-color": "#00b9fe",
+        "floating-chat.donateButton.text-color": "#fff",
+      })
+    }
+  })
+</script>
