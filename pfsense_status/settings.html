@@ -8,7 +8,7 @@
     --ag-border-strong: var(--border-color-strong, rgba(15, 23, 42, 0.18));
     --ag-text: var(--text-primary, var(--color-text, #0f172a));
     --ag-text-muted: var(--text-secondary, var(--color-text-secondary, #475569));
-    --ag-text-soft: var(--text-muted, #64748b);
+    --ag-text-soft: var(--text-muted, #64748b));
     --ag-primary: var(--accent-color, #14b8a6);
     --ag-info: var(--info-color, #3b82f6);
     --ag-shadow-sm: 0 8px 24px rgba(15, 23, 42, 0.08);
@@ -237,6 +237,35 @@
     line-height: 1.6;
   }
 
+  .ph-callout {
+    border: 1px solid var(--ag-border);
+    border-radius: var(--ag-radius-lg);
+    background: color-mix(in srgb, var(--ag-panel) 92%, var(--ag-bg) 8%);
+    padding: 14px 16px;
+  }
+
+  .ph-callout-copy {
+    font-size: 0.95rem;
+    color: var(--ag-text);
+    margin-bottom: 8px;
+  }
+
+  .ph-callout-help {
+    font-size: 0.9rem;
+    color: var(--ag-text-muted);
+    line-height: 1.6;
+  }
+
+  .ph-callout code {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--ag-bg-soft) 70%, var(--ag-panel) 30%);
+    border: 1px solid var(--ag-border);
+    color: var(--ag-text);
+    word-break: break-all;
+  }
+
   .ph-toggle-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -374,6 +403,28 @@
           <div class="ph-metric-label">Profile</div>
           <div class="ph-metric-value">Status</div>
           <div class="ph-metric-sub">Network overview plugin</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ph-section">
+      <div class="ph-section-header">
+        <span class="ph-section-icon" aria-hidden="true">🔑</span>
+        <div class="ph-section-copy">
+          <div class="ph-section-title">API key setup</div>
+          <div class="ph-section-subtitle">This plugin requires a pfSense REST API key.</div>
+        </div>
+      </div>
+      <div class="ph-section-body">
+        <div class="ph-callout">
+          <div class="ph-callout-copy">
+            Create the key in pfSense under <code>System &gt; REST API &gt; Keys</code>.
+          </div>
+          <div class="ph-callout-help">
+            To add the key in InkyPi, open the front page, click the key icon, add a new key named
+            <code>PFSENSE_API_KEY</code>, paste in your pfSense API key, and save it.
+          </div>
+          <div class="ph-callout-help" style="margin-top: 8px">Restart InkyPi if needed after saving the key.</div>
         </div>
       </div>
     </section>
