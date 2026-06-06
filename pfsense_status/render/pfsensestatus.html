@@ -56,21 +56,23 @@
       </div>
 
       {% if show_interfaces %}
-      <div class="interfaces-card">
-        <div class="section-title">Interfaces (clients seen)</div>
-        <div class="iface-list">
-          {% for iface in iface_items %}
-          <div class="iface-row">
-            <div class="iface-name">{{ iface.name }}</div>
-            <div class="iface-bar">
-              <div
-                class="bar-fill {% if iface.name == 'LAN' %}bar-lan{% elif iface.name == 'VLAN_IOT' %}bar-vlan_iot{% elif iface.name == 'VLAN_CCTV' %}bar-vlan_cctv{% elif iface.name == 'VLAN_WORK' %}bar-vlan_work{% elif iface.name == 'VLAN_GUEST' %}bar-vlan_guest{% else %}bar-other{% endif %}"
-                style="width: {{ iface.pct }}%;"
-              ></div>
+      <div class="interfaces-wrap">
+        <div class="interfaces-card">
+          <div class="section-title">Interfaces (clients seen)</div>
+          <div class="iface-list">
+            {% for iface in iface_items %}
+            <div class="iface-row">
+              <div class="iface-name">{{ iface.name }}</div>
+              <div class="iface-bar">
+                <div
+                  class="bar-fill {% if iface.name == 'LAN' %}bar-lan{% elif iface.name == 'VLAN_IOT' %}bar-vlan_iot{% elif iface.name == 'VLAN_CCTV' %}bar-vlan_cctv{% elif iface.name == 'VLAN_WORK' %}bar-vlan_work{% elif iface.name == 'VLAN_GUEST' %}bar-vlan_guest{% else %}bar-other{% endif %}"
+                  style="width: {{ iface.pct }}%;"
+                ></div>
+              </div>
+              <div class="iface-count">{{ iface.count }}</div>
             </div>
-            <div class="iface-count">{{ iface.count }}</div>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
       </div>
       {% endif %}
