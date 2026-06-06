@@ -2,8 +2,16 @@ html,
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
   width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 body {
@@ -12,24 +20,21 @@ body {
 
 .root {
   width: 100%;
-  min-width: 100%;
-  min-height: 100vh;
-  box-sizing: border-box;
+  height: calc(100vh - 8px);
+  padding: 8px 0 0 0;
   display: flex;
   flex-direction: column;
-  padding: 12px 0 4px 0;
   overflow: hidden;
 }
 
 .header-row {
   width: 100%;
-  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   padding: 0 4px;
-  margin: 0 0 6px 0;
+  margin: 0 0 4px 0;
   flex: 0 0 auto;
 }
 
@@ -44,36 +49,37 @@ body {
 .title {
   font-size: 40px;
   font-weight: 700;
-  line-height: 1.05;
+  line-height: 1.02;
 }
 
 .subtitle {
   font-size: 20px;
   color: gray;
-  margin-top: 4px;
-  line-height: 1.1;
+  margin-top: 2px;
+  line-height: 1.05;
 }
 
 .wan-card {
   border: 2px solid black;
   border-radius: 10px;
-  padding: 10px 16px;
+  padding: 8px 14px;
   min-width: 230px;
   text-align: right;
   background: #ffe4b5;
-  box-sizing: border-box;
   flex: 0 0 auto;
 }
 
 .wan-label {
   font-size: 20px;
   font-weight: 600;
+  line-height: 1.05;
 }
 
 .wan-status {
   font-size: 26px;
   font-weight: 800;
-  margin: 4px 0;
+  margin: 3px 0;
+  line-height: 1.05;
 }
 
 .wan-status.ok {
@@ -86,17 +92,17 @@ body {
 
 .wan-ip {
   font-size: 16px;
+  line-height: 1.05;
 }
 
 .metrics-row {
   width: 100%;
-  box-sizing: border-box;
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
   gap: 2px;
   padding: 0 4px;
-  margin: 0 0 6px 0;
+  margin: 0 0 4px 0;
   flex: 0 0 auto;
 }
 
@@ -105,9 +111,7 @@ body {
   min-width: 0;
   border: 2px solid black;
   border-radius: 8px;
-  padding: 10px 8px;
-  margin: 0;
-  box-sizing: border-box;
+  padding: 8px 6px;
 }
 
 .metric-clients {
@@ -131,7 +135,7 @@ body {
 }
 
 .metric-label {
-  font-size: 20px;
+  font-size: 18px;
   text-transform: uppercase;
   letter-spacing: 1px;
   text-align: center;
@@ -139,23 +143,21 @@ body {
 }
 
 .metric-value {
-  font-size: 46px;
+  font-size: 42px;
   font-weight: 800;
-  margin-top: 8px;
+  margin-top: 6px;
   text-align: center;
   line-height: 1;
 }
 
 .metric-value.smaller {
-  font-size: 26px;
-  line-height: 1.05;
+  font-size: 24px;
+  line-height: 1.02;
 }
 
 .interfaces-wrap {
   width: 100%;
-  box-sizing: border-box;
-  padding: 0 4px;
-  margin: 0;
+  padding: 0 4px 2px 4px;
   flex: 1 1 auto;
   min-height: 0;
   display: flex;
@@ -164,54 +166,55 @@ body {
 
 .interfaces-card {
   width: 100%;
+  min-height: 0;
   border: 2px solid black;
   border-radius: 8px;
-  padding: 8px 8px 6px 8px;
-  box-sizing: border-box;
+  padding: 6px 8px 8px 8px;
   display: flex;
   flex-direction: column;
   background: #f5f5f5;
-  min-height: 0;
   overflow: hidden;
 }
 
 .section-title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 600;
-  margin-bottom: 6px;
-  line-height: 1.1;
+  margin-bottom: 4px;
+  line-height: 1.05;
   flex: 0 0 auto;
 }
 
 .iface-list {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
   width: 100%;
   min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
 }
 
 .iface-row {
   display: flex;
   align-items: center;
   width: 100%;
+  min-height: 0;
 }
 
 .iface-name {
-  width: 150px;
-  font-size: 16px;
+  width: 140px;
+  flex: 0 0 140px;
+  font-size: 15px;
   font-weight: 600;
-  flex: 0 0 150px;
+  line-height: 1.05;
 }
 
 .iface-bar {
   flex: 1 1 auto;
-  height: 14px;
+  min-width: 0;
+  height: 12px;
   border: 1px solid black;
   margin: 0 8px;
-  box-sizing: border-box;
   background: #ffffff;
-  min-width: 0;
 }
 
 .bar-fill {
@@ -243,8 +246,9 @@ body {
 }
 
 .iface-count {
-  width: 40px;
-  flex: 0 0 40px;
-  font-size: 16px;
+  width: 36px;
+  flex: 0 0 36px;
+  font-size: 15px;
   text-align: right;
+  line-height: 1.05;
 }
